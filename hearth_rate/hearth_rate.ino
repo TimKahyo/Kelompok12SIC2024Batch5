@@ -27,6 +27,10 @@ void setup() {
   }
 
   Serial.println("Connected to WiFi");
+
+  Serial.println("")
+  Serial.print("Connected to WiFi Network with IP Address: ");
+  Serial.print(WiFi.localIP());
 }
 
 void loop() {
@@ -37,7 +41,6 @@ void loop() {
 
     // Mengirimkan data melalui metode POST
     if (WiFi.status()== WL_CONNECTED) {
-        WiFiClient client;
         HTTPClient http;
 
         http.begin(client, serverName);
