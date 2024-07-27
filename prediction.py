@@ -4,6 +4,9 @@ from urllib.parse import quote_plus
 import numpy as np
 import tensorflow as tf
 import keras
+from PIL import Image
+import base64
+from io import BytesIO
 
 # MongoDB credentials
 username = quote_plus("adminmari")
@@ -47,8 +50,35 @@ annotations = {
     }
 }
 
-# Streamlit UI
-st.title("ECG Heartbeat Anomaly Detection")
+
+def logo_to_base64(img):
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+    return img_str
+
+# Load the logo
+logo = Image.open('frontend/assets/logo.png')
+logo_base64 = logo_to_base64(logo)
+
+# Display the logo and title side by side
+st.markdown(
+    f"""
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="flex: 1;">
+            <img src="data:image/png;base64,{logo_base64}" style="width: 150px; height: auto;">
+        </div>
+        <div style="flex: 2; text-align: left;">
+            <h1>
+                <span style="color: #0036B9;">Mari:</span>
+                <span style="color: #FFB923;">Sistem Pemantauan Kesehatan Jantung</span>
+            </h1>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # Retrieve data from MongoDB
 def get_latest_data():
@@ -73,8 +103,31 @@ def predict_anomaly(data):
     else:
         return None, None, None
 
+# Custom CSS to style the button
+st.markdown(
+    """
+    <style>
+    .custom-button {
+        color: #0036B9;
+        border: 2px solid #FFB923;
+        background-color: transparent;
+        padding: 0.5em 1em;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .custom-button:hover {
+        background-color: #0036B9;
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # Button to trigger prediction
-if st.button('Get Latest ECG Data and Predict'):
+if st.markdown('<button class="custom-button">Get Latest ECG Data and Predict</button>', unsafe_allow_html=True):
     latest_data = get_latest_data()
     if latest_data is not None:
         st.write("Latest ECG Data Retrieved from MongoDB")
