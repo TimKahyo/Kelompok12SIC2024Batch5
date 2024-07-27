@@ -18,11 +18,9 @@ db = client['ECGDatabase']
 collection = db['ECGData']
 
 # Load the Keras model
-model_path = 'model/scalp_condition_classifier_model.h5'
+model_path = 'model/model.h5'
 
 model = keras.models.load_model(model_path)
-st.success("Model loaded successfully!")
-st.error("Error loading model:")
 
 # Define class labels and annotations
 classes = ['N', 'S', 'V', 'F', 'Q']
@@ -56,7 +54,7 @@ st.title("ECG Heartbeat Anomaly Detection")
 def get_latest_data():
     latest_record = collection.find_one(sort=[('_id', pymongo.DESCENDING)])
     if latest_record:
-        return np.array(latest_record['data']).astype(np.float32)
+        return np.array(latest_record['ecg_data']).astype(np.float32)
     else:
         st.error("No data found in MongoDB.")
         return None
