@@ -5,7 +5,6 @@ import numpy as np
 import tensorflow as tf
 import keras
 from PIL import Image
-import base64
 from io import BytesIO
 
 # MongoDB credentials
