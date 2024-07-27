@@ -18,7 +18,7 @@ db = client['ECGDatabase']
 collection = db['ECGData']
 
 # Load the Keras model
-model_path = 'E:/project_e/model/model.keras'
+model_path = 'model/model.keras'
 try:
     model = keras.models.load_model(model_path)
     st.success("Model loaded successfully!")
