@@ -25,27 +25,27 @@ model_path = 'model/model.h5'
 model = keras.models.load_model(model_path)
 
 # Definisikan label kelas dan anotasi
-kelas = ['N', 'S', 'V', 'F', 'Q']
-anotasi = {
+classes = ['N', 'S', 'V', 'F', 'Q']
+annotations= {
     'N': {
-        'anotasi': ['Normal', 'Blok cabang berkas kiri/kanan', 'Escape atrium', 'Escape nodal'],
-        'deskripsi': 'Detak jantung normal dan ketidakteraturan minor yang biasanya tidak menunjukkan masalah.'
+        'annotations': ['Normal', 'Blok cabang berkas kiri/kanan', 'Escape atrium', 'Escape nodal'],
+        'description': 'Detak jantung normal dan ketidakteraturan minor yang biasanya tidak menunjukkan masalah.'
     },
     'S': {
-        'anotasi': ['Prematur atrium', 'Prematur atrium abnormal', 'Prematur nodal', 'Prematur supra-ventrikel'],
-        'deskripsi': 'Detak jantung prematur yang berasal dari bilik atas jantung, yang bisa tidak berbahaya tetapi kadang-kadang membutuhkan perhatian medis.'
+        'annotations': ['Prematur atrium', 'Prematur atrium abnormal', 'Prematur nodal', 'Prematur supra-ventrikel'],
+        'description': 'Detak jantung prematur yang berasal dari bilik atas jantung, yang bisa tidak berbahaya tetapi kadang-kadang membutuhkan perhatian medis.'
     },
     'V': {
-        'anotasi': ['Kontraksi ventrikel prematur', 'Escape ventrikel'],
-        'deskripsi': 'Detak jantung prematur yang berasal dari bilik bawah jantung, yang bisa lebih serius dan mungkin memerlukan perawatan.'
+        'annotations': ['Kontraksi ventrikel prematur', 'Escape ventrikel'],
+        'description': 'Detak jantung prematur yang berasal dari bilik bawah jantung, yang bisa lebih serius dan mungkin memerlukan perawatan.'
     },
     'F': {
-        'anotasi': ['Fusi ventrikel dan normal'],
-        'deskripsi': 'Kombinasi detak jantung normal dan abnormal, yang mungkin menunjukkan masalah mendasar yang perlu evaluasi.'
+        'annotations': ['Fusi ventrikel dan normal'],
+        'description': 'Kombinasi detak jantung normal dan abnormal, yang mungkin menunjukkan masalah mendasar yang perlu evaluasi.'
     },
     'Q': {
-        'anotasi': ['Paced', 'Fusi paced dan normal', 'Tidak dapat diklasifikasikan'],
-        'deskripsi': 'Detak jantung yang dipengaruhi oleh alat pacu jantung atau detak tidak teratur yang tidak masuk ke dalam kategori lain, sering diawasi oleh penyedia layanan kesehatan.'
+        'annotations': ['Paced', 'Fusi paced dan normal', 'Tidak dapat diklasifikasikan'],
+        'description': 'Detak jantung yang dipengaruhi oleh alat pacu jantung atau detak tidak teratur yang tidak masuk ke dalam kategori lain, sering diawasi oleh penyedia layanan kesehatan.'
     }
 }
 
@@ -133,7 +133,7 @@ if st.markdown('<button class="custom-button">Dapatkan Data EKG Terbaru dan Pred
         predicted_class, annotations, description = predict_anomaly(latest_data)
         if predicted_class:
             st.success(f"Kelas yang Diprediksi: {predicted_class}")
-            st.write("Annotations:")
+            st.write("Anotasi:")
             for annotation in annotations:
                 st.write(f"- {annotation}")
             st.write(f"Deskripsi: {description}")
