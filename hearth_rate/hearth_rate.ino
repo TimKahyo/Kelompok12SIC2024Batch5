@@ -1,39 +1,9 @@
-// #define LP 35
-// #define LM 32
-// #define PIN_AN 33
-
-// void setup() {
-//   Serial.begin(9600);
-//   pinMode(LP, INPUT); // Setup for leads off detection LO +
-//   pinMode(LM, INPUT); // Setup for leads off detection LO -
-
-// }
-
-// void loop() {
-//   if ((digitalRead(LP) == 1) || (digitalRead(LM) == 1)) {
-//     Serial.println('!');
-//     return;
-//   }
-//   // Serial.println(analogRead(PIN_AN));
-
-//   int data = analogRead(PIN_AN);
-
-// if(data == 4095 || data == 0 ){
-//   return;
-// }
-//  Serial.println(data);
-
-//   delay(100);
-// }
-
-
-// Try Connected
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const char* ssid = "alifecg";      // Replace with your WiFi SSID
-const char* password = "16082003";  // Replace with your WiFi password
-const char* serverUrl = "http://192.168.167.149:5000/ecg";  // Replace with your Flask server URL
+const char* ssid = "brewing";      // Replace with your WiFi SSID
+const char* password = "manuwalokak";  // Replace with your WiFi password
+const char* serverUrl = "http://192.168.0.111:5000/ecg";  // Replace with your Flask server URLconst char* ssid = "brewing";      // Replace with your WiFi SSID
 
 #define LP 35
 #define LM 32
