@@ -3,7 +3,7 @@
 
 const char* ssid = "brewing";      // Replace with your WiFi SSID
 const char* password = "manuwalokak";  // Replace with your WiFi password
-const char* serverUrl = "http://192.168.0.111:5000/ecg";  // Replace with your Flask server URLconst char* ssid = "brewing";      // Replace with your WiFi SSID
+const char* serverUrl = "http://192.168.0.111:5000/ecg/add";  // Replace with your Flask server URLconst char* ssid = "brewing";      // Replace with your WiFi SSID
 
 #define LP 35
 #define LM 32
