@@ -90,18 +90,55 @@ def get_all_ecg_dataMv():
         return jsonify({"error": str(e)}), 500
 
 
+# @app.route("/ecg/init", methods=["POST"])
+# def init_ecg_data():
+#     values = np.random.rand(186, 1).astype(np.float32)
+#     initial_values = np.resize(values, (186, 1))
+#     ecg_data_collection.insert_one(
+#         {"dataValue": initial_values}
+#     )  # Menambahkan nilai awal sebagai satu dokumen
+#     logging.info(f"Initial ECG values added: {initial_values}")
+#     return (
+#         jsonify({"message": "Initial data added", "initial_values": initial_values}),
+#         200,
+#     )
+
+
+
+
+
+# @app.route("/ecg/add", methods=["POST"])
+# def add_ecg_data():
+#     try:
+#         data = request.json
+#         ecg_values = data.get("dataValue")
+#         ecg_data_collection.insert_one(
+#             {"dataValue": ecg_values}
+#         )  # <- Menambahkan nilai baru sebagai satu dokumen
+#         logging.info(f"New ECG values added: {ecg_values}")
+#         return jsonify({"message": "Data added", "dataValue": ecg_values}), 200
+#     except Exception as e:
+#         logging.error(f"Error in /ecg/add POST: {e}")
+#         return jsonify({"error": str(e)}), 500
+
+
+
 @app.route("/ecg/init", methods=["POST"])
 def init_ecg_data():
-    values = np.random.rand(186, 1).astype(np.float32)
-    initial_values = np.resize(values, (186, 1))
-    ecg_data_collection.insert_one(
-        {"dataValue": initial_values}
-    )  # Menambahkan nilai awal sebagai satu dokumen
-    logging.info(f"Initial ECG values added: {initial_values}")
-    return (
-        jsonify({"message": "Initial data added", "initial_values": initial_values}),
-        200,
-    )
+    try:
+        values = np.random.rand(186, 1).astype(np.float32)
+        initial_values = values.tolist()  # Konversi numpy array ke list
+        ecg_data_collection.insert_one(
+            {"dataValue": initial_values}
+        )  # Menambahkan nilai awal sebagai satu dokumen
+        logging.info(f"Initial ECG values added: {initial_values}")
+        return (
+            jsonify({"message": "Initial data added", "initial_values": initial_values}),
+            200,
+        )
+    except Exception as e:
+        logging.error(f"Error in /ecg/init POST: {e}")
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/ecg/add", methods=["POST"])
@@ -109,14 +146,24 @@ def add_ecg_data():
     try:
         data = request.json
         ecg_values = data.get("dataValue")
+        
+        # Konversi data ke list jika data berbentuk numpy array
+        if isinstance(ecg_values, np.ndarray):
+            ecg_values = ecg_values.tolist()
+        
         ecg_data_collection.insert_one(
             {"dataValue": ecg_values}
-        )  # <- Menambahkan nilai baru sebagai satu dokumen
+        )  # Menambahkan nilai baru sebagai satu dokumen
         logging.info(f"New ECG values added: {ecg_values}")
         return jsonify({"message": "Data added", "dataValue": ecg_values}), 200
     except Exception as e:
         logging.error(f"Error in /ecg/add POST: {e}")
         return jsonify({"error": str(e)}), 500
+    
+
+
+# Get system
+
 
 
 @app.route("/ecg/get_latestEcg", methods=["GET"])
