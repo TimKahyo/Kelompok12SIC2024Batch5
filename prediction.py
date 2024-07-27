@@ -24,6 +24,7 @@ model_path = 'model/model.h5'
 
 model = keras.models.load_model(model_path)
 
+
 # Definisikan label kelas dan anotasi
 classes = ['N', 'S', 'V', 'F', 'Q']
 annotations= {
@@ -122,7 +123,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 
 # Button to trigger prediction
 if st.markdown('<button class="custom-button">Dapatkan Data EKG Terbaru dan Prediksi</button>', unsafe_allow_html=True):
