@@ -24,31 +24,30 @@ model_path = 'model/model.h5'
 
 model = keras.models.load_model(model_path)
 
-# Define class labels and annotations
-classes = ['N', 'S', 'V', 'F', 'Q']
-annotations = {
+# Definisikan label kelas dan anotasi
+kelas = ['N', 'S', 'V', 'F', 'Q']
+anotasi = {
     'N': {
-        'annotations': ['Normal', 'Left/Right bundle branch block', 'Atrial escape', 'Nodal escape'],
-        'description': 'Normal heartbeats and minor irregularities that usually do not indicate a problem.'
+        'anotasi': ['Normal', 'Blok cabang berkas kiri/kanan', 'Escape atrium', 'Escape nodal'],
+        'deskripsi': 'Detak jantung normal dan ketidakteraturan minor yang biasanya tidak menunjukkan masalah.'
     },
     'S': {
-        'annotations': ['Atrial premature', 'Aberrant atrial premature', 'Nodal premature', 'Supra-ventricular premature'],
-        'description': 'Premature heartbeats originating from the upper chambers of the heart, which can be harmless but sometimes need medical attention.'
+        'anotasi': ['Prematur atrium', 'Prematur atrium abnormal', 'Prematur nodal', 'Prematur supra-ventrikel'],
+        'deskripsi': 'Detak jantung prematur yang berasal dari bilik atas jantung, yang bisa tidak berbahaya tetapi kadang-kadang membutuhkan perhatian medis.'
     },
     'V': {
-        'annotations': ['Premature ventricular contraction', 'Ventricular escape'],
-        'description': 'Premature heartbeats originating from the lower chambers of the heart, which can be more serious and may require treatment.'
+        'anotasi': ['Kontraksi ventrikel prematur', 'Escape ventrikel'],
+        'deskripsi': 'Detak jantung prematur yang berasal dari bilik bawah jantung, yang bisa lebih serius dan mungkin memerlukan perawatan.'
     },
     'F': {
-        'annotations': ['Fusion of ventricular and normal'],
-        'description': 'A combination of normal and abnormal heartbeats, which might indicate an underlying issue needing evaluation.'
+        'anotasi': ['Fusi ventrikel dan normal'],
+        'deskripsi': 'Kombinasi detak jantung normal dan abnormal, yang mungkin menunjukkan masalah mendasar yang perlu evaluasi.'
     },
     'Q': {
-        'annotations': ['Paced', 'Fusion of paced and normal', 'Unclassifiable'],
-        'description': 'Heartbeats influenced by a pacemaker or irregular beats that do not fit into other categories, often monitored by healthcare providers.'
+        'anotasi': ['Paced', 'Fusi paced dan normal', 'Tidak dapat diklasifikasikan'],
+        'deskripsi': 'Detak jantung yang dipengaruhi oleh alat pacu jantung atau detak tidak teratur yang tidak masuk ke dalam kategori lain, sering diawasi oleh penyedia layanan kesehatan.'
     }
 }
-
 
 # def logo_to_base64(img):
 #     buffered = BytesIO()
@@ -126,15 +125,15 @@ st.markdown(
 
 
 # Button to trigger prediction
-if st.markdown('<button class="custom-button">Get Latest ECG Data and Predict</button>', unsafe_allow_html=True):
+if st.markdown('<button class="custom-button">Dapatkan Data EKG Terbaru dan Prediksi</button>', unsafe_allow_html=True):
     latest_data = get_latest_data()
     if latest_data is not None:
-        st.write("Latest ECG Data Retrieved from MongoDB")
+        st.write("Data EKG Terbaru Diperoleh dari MongoDB")
         st.write(latest_data)
         predicted_class, annotations, description = predict_anomaly(latest_data)
         if predicted_class:
-            st.success(f"Predicted Class: {predicted_class}")
+            st.success(f"Kelas yang Diprediksi: {predicted_class}")
             st.write("Annotations:")
             for annotation in annotations:
                 st.write(f"- {annotation}")
-            st.write(f"Description: {description}")
+            st.write(f"Deskripsi: {description}")
