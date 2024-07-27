@@ -51,22 +51,22 @@ annotations = {
 }
 
 
-def logo_to_base64(img):
-    buffered = BytesIO()
-    img.save(buffered, format="PNG")
-    img_str = base64.b64encode(buffered.getvalue()).decode()
-    return img_str
+# def logo_to_base64(img):
+#     buffered = BytesIO()
+#     img.save(buffered, format="PNG")
+#     img_str = base64.b64encode(buffered.getvalue()).decode()
+#     return img_str
 
-# Load the logo
-logo = Image.open('frontend/assets/logo.png')
-logo_base64 = logo_to_base64(logo)
+# # Load the logo
+# logo = Image.open('frontend/assets/logo.png')
+# logo_base64 = logo_to_base64(logo)
 
 # Display the logo and title side by side
 st.markdown(
     f"""
     <div style="display: flex; align-items: center; justify-content: space-between;">
         <div style="flex: 1;">
-            <img src="data:image/png;base64,{logo_base64}" style="width: 150px; height: auto;">
+            <img src="https://raw.githubusercontent.com/TimKahyo/Kelompok12SIC2024Batch5/main/frontend/assets/logo.png" style="width: 150px; height: auto;">
         </div>
         <div style="flex: 2; text-align: left;">
             <h1>
