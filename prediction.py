@@ -3,6 +3,7 @@ import pymongo
 from urllib.parse import quote_plus
 import numpy as np
 import tensorflow as tf
+import keras
 
 # MongoDB credentials
 username = quote_plus("adminmari")
@@ -19,7 +20,7 @@ collection = db['ECGData']
 # Load the Keras model
 model_path = 'E:/project_e/model/model.keras'
 try:
-    model = tf.keras.models.load_model(model_path)
+    model = keras.models.load_model(model_path)
     st.success("Model loaded successfully!")
 except Exception as e:
     st.error(f"Error loading model: {e}")

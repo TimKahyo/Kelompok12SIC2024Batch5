@@ -4,7 +4,7 @@ from PIL import Image
 def login_page():
     col1, col2, col3 = st.columns(3)
     with col2:
-        logo = Image.open('Streamlit/assets/logo.png')
+        logo = Image.open('assets/logo.png')
         st.image(logo, use_column_width=True)
 
     st.markdown(
