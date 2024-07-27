@@ -66,7 +66,7 @@ def get_ecg_data():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/ecg/all', methods=['GET'])
-def get_all_ecg_data():
+def get_all_ecg_dataMv():
     try:
         ecg_data_cursor = ecg_data_collection.find()
         all_ecg_data = [{"dataValue": doc['dataValue']} for doc in ecg_data_cursor]
@@ -126,6 +126,43 @@ def add_ecg_data():
     except Exception as e:
         logging.error(f"Error in /ecg/add POST: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/ecg/get_latestEcg', methods=['GET'])
+def get_latest_ecg_data():
+    try:
+        # Mengambil dokumen terbaru
+        latest_ecg_data = ecg_data_collection.find_one(
+            sort=[('_id', -1)]
+        )
+        
+        if latest_ecg_data:
+            logging.info(f"Retrieved latest ECG data: {latest_ecg_data['dataValue']}")
+            return jsonify({"message": "Latest ECG data retrieved", "dataValue": latest_ecg_data['dataValue']}), 200
+        else:
+            return jsonify({"message": "No ECG data found"}), 404
+    except Exception as e:
+        logging.error(f"Error in /ecg/get_latest GET: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/ecg/get_allData', methods=['GET'])
+def get_all_ecg_data():
+    try:
+        # Mengambil semua dokumen dari koleksi
+        ecg_data_cursor = ecg_data_collection.find()
+        all_ecg_data = [{"dataValue": doc['dataValue']} for doc in ecg_data_cursor]
+        
+        if all_ecg_data:
+            logging.info(f"Retrieved all ECG data.")
+            return jsonify({"message": "All ECG data retrieved", "data": all_ecg_data}), 200
+        else:
+            return jsonify({"message": "No ECG data found"}), 404
+    except Exception as e:
+        logging.error(f"Error in /ecg/get_all GET: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
