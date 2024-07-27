@@ -156,7 +156,7 @@ def add_ecg_data():
         ecg_values = [ecg_values]
         dataEcg.append(ecg_values)
         
-        if len(dataEcg) == 3 :
+        if len(dataEcg) == 186 :
             ecg_data_collection.insert_one(
                 {"dataValue": dataEcg}
             )  # Menambahkan nilai baru sebagai satu dokumen

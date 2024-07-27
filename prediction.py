@@ -18,12 +18,11 @@ db = client['ECGDatabase']
 collection = db['ECGData']
 
 # Load the Keras model
-model_path = 'model/model.keras'
-try:
-    model = keras.models.load_model(model_path)
-    st.success("Model loaded successfully!")
-except Exception as e:
-    st.error(f"Error loading model: {e}")
+model_path = 'model/scalp_condition_classifier_model.h5'
+
+model = keras.models.load_model(model_path)
+st.success("Model loaded successfully!")
+st.error("Error loading model:")
 
 # Define class labels and annotations
 classes = ['N', 'S', 'V', 'F', 'Q']
