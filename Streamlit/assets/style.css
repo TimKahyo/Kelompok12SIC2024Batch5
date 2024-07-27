@@ -1,0 +1,13 @@
+.bpm-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #f63366;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0 auto;
+}
