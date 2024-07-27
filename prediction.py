@@ -125,7 +125,7 @@ st.markdown(
 )
 
 # Button to trigger prediction
-if st.markdown('<button class="custom-button">Dapatkan Data EKG Terbaru dan Prediksi</button>', unsafe_allow_html=True):
+if st.button("Dapatkan Data EKG Terbaru dan Prediksi"):
     latest_data = get_latest_data()
     if latest_data is not None:
         st.write("Data EKG Terbaru Diperoleh dari MongoDB")
@@ -133,7 +133,7 @@ if st.markdown('<button class="custom-button">Dapatkan Data EKG Terbaru dan Pred
         predicted_class, annotations, description = predict_anomaly(latest_data)
         if predicted_class:
             st.success(f"Kelas yang Diprediksi: {predicted_class}")
-            st.write("Anotasi:")
+            st.write("Annotations:")
             for annotation in annotations:
                 st.write(f"- {annotation}")
             st.write(f"Deskripsi: {description}")
