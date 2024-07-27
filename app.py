@@ -36,6 +36,9 @@ except Exception as e:
 ecg_data_collection = db["ecg_data"]  # Menggunakan koleksi 'ecg_data'
 
 
+# array list dataEcg
+dataEcg = []
+
 @app.route("/ecg", methods=["POST"])
 def ecg_data():
     try:
@@ -143,19 +146,24 @@ def init_ecg_data():
 
 @app.route("/ecg/add", methods=["POST"])
 def add_ecg_data():
+    global dataEcg
     try:
         data = request.json
-        ecg_values = data.get("dataValue")
+        ecg_values = data.get("dataValue") 
+        ecg_values = ecg_values / 4095.0
+
         
-        # Konversi data ke list jika data berbentuk numpy array
-        if isinstance(ecg_values, np.ndarray):
-            ecg_values = ecg_values.tolist()
+        ecg_values = [ecg_values]
+        dataEcg.append(ecg_values)
         
-        ecg_data_collection.insert_one(
-            {"dataValue": ecg_values}
-        )  # Menambahkan nilai baru sebagai satu dokumen
-        logging.info(f"New ECG values added: {ecg_values}")
-        return jsonify({"message": "Data added", "dataValue": ecg_values}), 200
+        if len(dataEcg) == 3 :
+            ecg_data_collection.insert_one(
+                {"dataValue": dataEcg}
+            )  # Menambahkan nilai baru sebagai satu dokumen
+            dataEcg = []
+    
+        logging.info(f"New ECG values added: {dataEcg}")
+        return jsonify({"message": "Data added", "dataValue": dataEcg}), 200
     except Exception as e:
         logging.error(f"Error in /ecg/add POST: {e}")
         return jsonify({"error": str(e)}), 500
@@ -163,9 +171,6 @@ def add_ecg_data():
 
 
 # Get system
-
-
-
 @app.route("/ecg/get_latestEcg", methods=["GET"])
 def get_latest_ecg_data():
     try:
